@@ -1,0 +1,18 @@
+/*
+	For "heaven's wisps". 
+	Use std::atomic or "deactivation" to solve the thread-safe issue. 
+	When panning around (to fix the zooming issues), instead of adjusting coordinates of drawing, shift entire universe around keeping drawing origin in place. 
+	Use multithreading to accelerate the computation. 
+*/
+
+EVEN BETTER
+mutex can basically solve this completely
+
+I'm actually thinking it might be alright to rewrite this from scratch. I feel like I could make it substantially more
+efficient / elegant. This time I should really be using multithreading to hopefully make it run (somewhat if not 
+substantially) faster. 
+
+The basic rewrite would consist of the following improvements: 
+1. Save current state of universe to a copy. 
+2. Over the true universe, use the value of the copy to determine next state. 
+3. Use mutexes (mutices?) to ensure rendering thread and ticking thread(s) don't step over each other (ticking threads can just join). 
